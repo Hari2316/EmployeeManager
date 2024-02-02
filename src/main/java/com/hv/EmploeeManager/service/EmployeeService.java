@@ -33,18 +33,45 @@ public class EmployeeService {
 
 	// get employee by id
 	public Employee findEmployeeById(Long id) {
+//		employeeRepo.findById(id);
 		return employeeRepo.findEmployeeById(id)
 				.orElseThrow(() -> new UserNotFoundException("User by id " + id + " was not found"));
 	}
 
 	// Update Employee
-	public Employee updateEmployee(Employee employee) {
-		return employeeRepo.save(employee);
+	public Employee updateEmployee(Long id, Employee employee) {
+		Employee existingEmployee = employeeRepo.findById(id).orElse(null);
+
+		if (existingEmployee != null) {
+
+			// Update the user object with the new data
+			if (employee.getEmail() != null) {
+				existingEmployee.setEmail(employee.getEmail());
+			}
+			if (employee.getName() != null) {
+				existingEmployee.setName(employee.getName());
+			}
+			if (employee.getJobTitle() != null) {
+				existingEmployee.setJobTitle(employee.getJobTitle());
+			}
+			if (employee.getPhone() != null) {
+				existingEmployee.setPhone(employee.getPhone());
+			}
+			if (employee.getImageUrl() != null) {
+				existingEmployee.setImageUrl(employee.getImageUrl());
+			}
+
+			return employeeRepo.save(existingEmployee);
+		} else {
+			return null;
+		}
+
 	}
 
 	// Delete Employee by empId
 	public void deleteEmployee(Long id) {
-		employeeRepo.deleteEmployeeById(id);
+//		employeeRepo.deleteEmployeeById(id);
+		employeeRepo.deleteById(id);
 	}
 
 }

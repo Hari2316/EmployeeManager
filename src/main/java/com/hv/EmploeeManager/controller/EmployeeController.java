@@ -43,10 +43,14 @@ public class EmployeeController {
 		return new ResponseEntity<>(newEmployee, HttpStatus.CREATED);
 	}
 
-	@PutMapping("/update")
-	public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee) {
-		Employee updateEmployee = employeeService.updateEmployee(employee);
-		return new ResponseEntity<>(updateEmployee, HttpStatus.OK);
+	@PutMapping("/update/{id}")
+	public ResponseEntity<Employee> updateEmployee(@PathVariable("id") Long id, @RequestBody Employee employee) {
+		Employee updatedEmployee = employeeService.updateEmployee(id, employee);
+		if (updatedEmployee != null) {
+			return new ResponseEntity<>(updatedEmployee, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 
 	@DeleteMapping("/delete/{id}")
