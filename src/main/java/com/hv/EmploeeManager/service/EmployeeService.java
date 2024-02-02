@@ -12,67 +12,39 @@ import com.hv.EmploeeManager.repo.EmployeeRepo;
 
 @Service
 public class EmployeeService {
-	
+
 	private final EmployeeRepo employeeRepo;
-	
+
 	@Autowired
-	public EmployeeService(EmployeeRepo employeeRepo)
-	{
-		this.employeeRepo=employeeRepo;
+	public EmployeeService(EmployeeRepo employeeRepo) {
+		this.employeeRepo = employeeRepo;
 	}
-	
-	
+
 	// Create a new Employee
-	public Employee addEmployee(Employee employee)
-	{
+	public Employee addEmployee(Employee employee) {
 		employee.setEmployeeCode(UUID.randomUUID().toString());
 		return employeeRepo.save(employee);
 	}
-	
+
 	// get list of all employees
-	public List<Employee> findAllEmployees()
-	{
+	public List<Employee> findAllEmployees() {
 		return employeeRepo.findAll();
 	}
-	
-	
+
 	// get employee by id
-	public Employee findEmployeeById(Long id)
-	{
-		return employeeRepo.findEmployeeById(id).orElseThrow(() -> new UserNotFoundException("User by id "+id+" was not found"));
+	public Employee findEmployeeById(Long id) {
+		return employeeRepo.findEmployeeById(id)
+				.orElseThrow(() -> new UserNotFoundException("User by id " + id + " was not found"));
 	}
-	
-	
+
 	// Update Employee
-	public Employee updateEmployee(Employee employee)
-	{
+	public Employee updateEmployee(Employee employee) {
 		return employeeRepo.save(employee);
 	}
-	
+
 	// Delete Employee by empId
-	public void deleteEmployee(Long id)
-	{
+	public void deleteEmployee(Long id) {
 		employeeRepo.deleteEmployeeById(id);
 	}
-	
-	
-	
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
